@@ -1,4 +1,4 @@
-FROM veereshvalakonda/mongodb:latest
+FROM veeresh/mongodb:latest
 
 EXPOSE 27017
 ENTRYPOINT ["usr/bin/mongos"]
