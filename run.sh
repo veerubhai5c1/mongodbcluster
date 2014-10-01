@@ -26,5 +26,9 @@ echo "Starting mongodb config server3..."
 sudo docker run -P -name cfg3 -d veeresh/mongodb --noprealloc --smallfiles --configsvr --dbpath /data/db --port ${MONGO_PORT}
 
 sleep 10
+# Get Ip address of config serveres
+ip1=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' cfg1)
+ip2=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' cfg2)
+ip3=$(sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' cfg3)
 echo "Starting mongodb query router..."
-sudo docker run -P  -name mongos1 -d veeresh/mongos --port ${MONGO_PORT} --configdb 172.17.0.105:${MONGO_PORT},172.17.0.106:${MONGO_PORT},172.17.0.107:${MONGO_PORT}
+sudo docker run -P  -name mongos1 -d veeresh/mongos --port ${MONGO_PORT} --configdb ${ip1}:${MONGO_PORT},${ip2}:${MONGO_PORT},${ip3}:${MONGO_PORT}
