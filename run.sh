@@ -24,3 +24,7 @@ echo "Starting mongodb config server2..."
 sudo docker run -P -name cfg2 -d veeresh/mongodb --noprealloc --smallfiles --configsvr --dbpath /data/db --port ${MONGO_PORT}
 echo "Starting mongodb config server3..."
 sudo docker run -P -name cfg3 -d veeresh/mongodb --noprealloc --smallfiles --configsvr --dbpath /data/db --port ${MONGO_PORT}
+
+sleep 10
+echo "Starting mongodb query router..."
+sudo docker run -P  -name mongos1 -d veeresh/mongos --port ${MONGO_PORT} --configdb 172.17.0.105:${MONGO_PORT},172.17.0.106:${MONGO_PORT},172.17.0.107:${MONGO_PORT}
