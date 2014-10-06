@@ -12,4 +12,9 @@ RUN apt-get install mongodb-10gen
 RUN mkdir -p /data/db
 
 EXPOSE 27017
-ENTRYPOINT ["usr/bin/mongod"]
+ADD start /start
+ADD initiate.js /initiate.js
+ADD setReplica1.js /setReplica1.js
+ADD setReplica2.js /setReplica2.js
+RUN chmod 0755 /start /*.js
+CMD ["/start"]
